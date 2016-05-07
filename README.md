@@ -1,67 +1,60 @@
 81online
-========
+=====================可供生产使用=======================
 
-===================== READY FOR PRODUCTION USE =======================
-                     
-                     Known bugs have all been fixed
-                     It should be ready for production
-                     use.
-                     
+                 已知的bug都被修复
+                 它应该是为生产做好准备
+                 使用。
 ======================================================================
+此项目是根据OpenVPN的前端用户管理平台。
 
-This projects is a front-end user management platform based on OpenVPN.
+它现在具有以下特点：
 
-It right now has the following features:
+用户
 
-1. User
+1.1登录查看帐户状态，包括信息，如配额总量，配额使用和左配额。
 
-   1.1 Login to view the account status, including information such as total quota, used quota and left quota.
-   
-   1.2 Change the password.
-   
-   1.3 View the installation instruction.
+1.2更改密码。
 
-2. Admin
+1.3查看安装说明。
 
-   2.1 Login to view all users and admins.
-   
-   2.2 Add new users and admins.
-   
-   2.3 Delete users and admins.
-   
-   2.4 Change admin password.
+联系
 
-3. To Do
+2.1登录查看所有用户和管理员。
 
-   All mysql connections are made by using PHP mysql extension. In future, it is urgent to move to mysqli extension
-   instead to avoid any secruity issues.
+2.2新增用户和管理员。
 
-   The system is now Chinese version only. Multi-language support is considered to be added later.
-   
-   Front-end UI design is being developed.
-   
-   Add user with custom attributes.
-   
-   To be continued.
-   
-4. INSTALLATION
+2.3删除用户和管理员。
 
-   You have to install openvpn first on your server. It needs openvpn-auth-pam.so in the openvpn directory. It can be
-   find in the resource directory. For Debian you may use the following command:
+2.4更改管理员密码。
+
+去做
+
+所有MySQL连接是通过使用PHP MySQL扩展的。今后，迫切需要移动到mysqli扩展来避免任何secruity问题。
+
+该系统现在只有中国的版本。多语言支持被认为是后来添加的。
+
+前端UI设计正在开发中。
+
+新增用户自定义属性。
+
+待续。
+
+安装
+
+你有你的服务器上先安装OpenVPN。它需要openvpn-auth-pam.so在OpenVPN的目录中。它可以发现在资源目录。对于Debian您可以使用下面的命令：
 
          cp /usr/lib/openvpn/openvpn-auth-pam.so /etc/openvpn/
 
-   pam-mysql needs to be installed. For Debian, use the following command to install it:
+   要安装PAM-MySQL需要。对于Debian，请使用以下命令进行安装：
 
          aptitude install libpam-dev libpam-mysql libmysql++-dev sasl2-bin
    
-   Also, you need to config pam-mysql. Add the following TWO lines in to '/etc/pam.d/openvpn'. If it doesn't exist, just
-   create a new file:
+  此外，您还需要配置PAM-mysql的。添加以下两行中“/etc/pam.d/openvpn”。如果它不存在，只需要创建一个新的文件：
    
          auth optional pam_mysql.so user=openvpn passwd=PASSWORD host=localhost db=openvpn table=user usercolumn=username passwdcolumn=password where=active=1 crypt=2
          account required pam_mysql.so user=openvpn passwd=PASSWORD host=localhost db=openvpn table=user usercolumn=username passwdcolumn=password where=active=1 crypt=2
    
-   Remember to change the user, passwd, host and db according your database.
+   请记住，根据更改数据库的用户，passwd文件，主机和数据库。
    
    Run
 
@@ -87,20 +80,17 @@ It right now has the following features:
 
    In your client.conf
    
-         Comment out
+          注释掉
 
                cert client.crt
                key client.key
    
-         Add
+         A添加
 
                auth-user-pass
                
-   If any part of the above code is already in your configuration file, don't just add it, but modify the existing
-   config to above.
-   
-   Copy connect.sh and disconnect.sh from Script directory to the directory where OpenVPN is installed.
-   /etc/openvpn for Debian.
-   
-   The user runs openvpn process needs to have executing permission on connect.sh and disconnect.sh. You need to change
-   the database connection information in connect.sh and disconnect.sh
+   如果上面的代码的任何部分已经在你的配置文件，不只是添加它，但修改现有的配置上面。
+
+从脚本目录复制connect.sh和disconnect.sh到安装的OpenVPN的目录。在/ etc / OpenVPN的为Debian。
+
+用户运行OpenVPN的过程中需要对connect.sh和disconnect.sh执行权限。您需要更改connect.sh和disconnect.sh数据库连接信息
